@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 
+// Importing the Bootstrap 5 CSS
+import "bootstrap/dist/css/bootstrap.min.css";
+
 let sandwiches = [
   {
     id: 1,
@@ -32,21 +35,25 @@ const Sandwich = ({ sandwich }) => {
 
   return (
     <React.Fragment>
-      <div>
-        <h3>
-          <input onChange={(evt) => update(evt.target.value, "name", data)} value={data.name} />
-        </h3>
-        <div>
-          <input onChange={(evt) => update(evt.target.value, "description", data)} value={data.description} />
-        </div>
-        <div>
-          <input onChange={(evt) => update(evt.target.value, "price", data)} value={data.price} />
-        </div>
-        {dirty ? (
-          <div>
-            <button onClick={onSave}>Save</button>
+      <div class="row mt-3 mb-2">
+        <div className="col-md-6">
+          <div class="input-group input-group-lg mb-2">
+            <input type="text" class="form-control" aria-label="input field" onChange={(evt) => update(evt.target.value, "name", data)} value={data.name} />
           </div>
-        ) : null}
+          <div class="input-group input-group-md mb-2">
+            <input type="text" class="form-control" aria-label="input field" onChange={(evt) => update(evt.target.value, "description", data)} value={data.description} />
+          </div>
+          <div class="input-group input-group-sm mb-2">
+            <input type="text" class="form-control" aria-label="input field" onChange={(evt) => update(evt.target.value, "price", data)} value={data.price} />
+          </div>
+          {dirty ? (
+            <div class="input-group input-group-sm mb-2">
+              <button class="btn btn-primary" onClick={onSave}>
+                Save
+              </button>
+            </div>
+          ) : null}
+        </div>
       </div>
     </React.Fragment>
   );
