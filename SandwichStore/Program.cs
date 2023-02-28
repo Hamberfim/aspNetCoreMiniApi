@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using SandwichStore.Models;
 
+const string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 var builder = WebApplication.CreateBuilder(args);
 
 // db connection
@@ -19,7 +21,14 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 // TODO: needs configured
-builder.Services.AddCors(options => { });
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+      builder =>
+      {
+          builder.WithOrigins("*");
+      });
+});
 
 var app = builder.Build();
 
@@ -34,6 +43,8 @@ app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "SandwichStore API v1");
 });
+
+app.UseCors(MyAllowSpecificOrigins);
 
 app.MapGet("/", () => "head over to /swagger");
 // to SandwichDB : DbContext in SandwichModel.cs file for a persistent SQLite db
